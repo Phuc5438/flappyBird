@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +6,9 @@ using UnityEngine.InputSystem;
 public class BirdController : MonoBehaviour
 {
     public float jumpForce = 5f;
+    public float rotationSmooth = 5f;
+    public float rotationMax = 45f;
+    public float rotationMin = -90f;
 
     private Rigidbody2D rb;
     private bool gameStarted = false;
@@ -23,8 +27,9 @@ public class BirdController : MonoBehaviour
     {
         if (!gameStarted)
         {
-            float floatY = Mathf.Sin(Time.time * 2f) * 0.5f;
+            float floatY = Mathf.Sin(Time.time * 2f) * 0.2f;
             transform.position = startPos + new Vector3(0, floatY, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -32,11 +37,27 @@ public class BirdController : MonoBehaviour
             if (!gameStarted)
             {
                 gameStarted = true;
-                rb.gravityScale = 1;
+                rb.gravityScale = 1.5f;
                 transform.position = startPos;
             }
 
             rb.linearVelocity = Vector2.up * jumpForce;
+        }
+
+        if (gameStarted)
+        {
+            float angle = Mathf.Clamp(rb.linearVelocity.y * 5, rotationMin, rotationMax);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), rotationSmooth * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            Debug.Log("touch ground");
+            Time.timeScale = 0;
+            gameStarted = false;
         }
     }
 }
