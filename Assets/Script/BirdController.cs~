@@ -47,8 +47,7 @@ public class BirdController : MonoBehaviour
         if (gameStarted)
         {
             float angle = Mathf.Clamp(rb.linearVelocity.y * 5, rotationMin, rotationMax);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle),
-                rotationSmooth * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), rotationSmooth * Time.deltaTime);
         }
     }
 
@@ -59,8 +58,7 @@ public class BirdController : MonoBehaviour
             Debug.Log("touch ground");
             Time.timeScale = 0;
             gameStarted = false;
-        }
-        else if (collision.gameObject.CompareTag("pipe"))
+        }else if (collision.gameObject.CompareTag("pipe"))
         {
             int count = 1;
             Debug.Log("touch pipe" + count);
