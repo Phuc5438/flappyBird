@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ground
   - pipe
+  - point
   layers:
   - Default
   - TransparentFX

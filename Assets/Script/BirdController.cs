@@ -37,7 +37,7 @@ public class BirdController : MonoBehaviour
             if (!gameStarted)
             {
                 gameStarted = true;
-                rb.gravityScale = 1.5f;
+                rb.gravityScale = 2f;
                 transform.position = startPos;
             }
 
@@ -65,6 +65,10 @@ public class BirdController : MonoBehaviour
             int count = 1;
             Debug.Log("touch pipe" + count);
             count++;
+        }
+        else if(collision.gameObject.CompareTag("point"))
+        {
+            Debug.Log("score");
         }
     }
 }
