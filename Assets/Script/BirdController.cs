@@ -57,7 +57,7 @@ public class BirdController : MonoBehaviour
         if (collision.gameObject.CompareTag("ground"))
         {
             Debug.Log("touch ground");
-            Time.timeScale = 0;
+            // Time.timeScale = 0;
             gameStarted = false;
         }
         else if (collision.gameObject.CompareTag("pipe"))
